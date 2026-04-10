@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="第一代初始版本，缺乏适应度对比图和路线图">
+      <change afterPath="$PROJECT_DIR$/core/base_solver.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/output/fitness_comparison.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/output/routes_improved.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/output/routes_pure.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/visualizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/ga_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/pure_ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/pure_ga_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/cache/GA_routes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/output/GA_routes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/components.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="3C9OeyOvYH1NmeaJlFKv1WeIOcs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ga_engine.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mp2_success.executor": "Run",
+    "Python.visualizer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/University/Graduate/Project/cvrppy/CVRP_pro/data/input",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\University\Graduate\Project\cvrppy\CVRP_pro\data\input" />
+      <recent name="D:\University\Graduate\Project\cvrppy\CVRP_pro\data\cache" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="" />
+      <created>1775794418619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775794418619</updated>
+      <workItem from="1775794422406" duration="20458000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="第一代初始版本，缺乏适应度对比图和路线图" />
+    <option name="LAST_COMMIT_MESSAGE" value="第一代初始版本，缺乏适应度对比图和路线图" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CVRP_pro$ga_engine.coverage" NAME="ga_engine Coverage Results" MODIFIED="1775829983459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$mp2_success.coverage" NAME="mp2_success Coverage Results" MODIFIED="1775817814764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/input" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$main.coverage" NAME="main Coverage Results" MODIFIED="1775830006712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$visualizer.coverage" NAME="visualizer Coverage Results" MODIFIED="1775824062743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+  </component>
+</project>
