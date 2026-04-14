@@ -1,3 +1,9 @@
+"""
+配置文件
+该文件包含项目的所有配置参数，包括路径配置、文件名、算法参数、界面参数和颜色配置。
+@Author: Met
+@Date: 2026-03-12
+"""
 import os
 
 # 路径配置
@@ -6,14 +12,14 @@ DATA_INPUT_DIR = os.path.join(BASE_DIR, "data", "input")
 DATA_OUTPUT_DIR = os.path.join(BASE_DIR, "data", "output")
 
 # 文件名
-VRP_FILE = "A-n80-k10.vrp"
-MAP_FILE = "obstacles_dev.txt"
+VRP_FILE = "A-n80-k10.vrp" #VRP数据文件
+MAP_FILE = "obstacles_dev.txt" #地图文件
 
 # 算法参数
-POP_SIZE = 80
-GENERATIONS = 300
-ELITE_SIZE = 6
-MUT_START = 0.6
+POP_SIZE = 80 #种群大小
+GENERATIONS = 300 #遗传代数
+ELITE_SIZE = 6 #精英数大小
+MUT_START = 0.6 #变异率由0.6减小至0.1。
 MUT_END = 0.1
 
 # 界面参数

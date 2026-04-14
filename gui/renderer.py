@@ -1,3 +1,16 @@
+"""
+GUI渲染器文件
+
+该文件实现了SimulationApp类，用于可视化CVRP问题的解决方案。
+主要功能包括：
+1. 初始化GUI窗口和相关资源
+2. 预计算所有车辆的平滑路径
+3. 绘制地图、障碍物、节点和车辆
+4. 实现动画效果，展示车辆行驶过程
+5. 提供交互式控制面板，包括路线开关和动画控制
+@Author: Met
+@Date: 2026-03-12
+"""
 import pygame
 import sys
 import colorsys
@@ -6,7 +19,14 @@ from utils.path_finding import PathFinder
 
 
 class SimulationApp:
+    """CVRP问题解决方案可视化应用"""
     def __init__(self, nodes, grid_map, solution):
+        """
+        初始化应用
+        :param nodes: 节点列表
+        :param grid_map: 网格地图
+        :param solution: 解决方案
+        """
         pygame.init()
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption(f"多车辆垃圾清运仿真系统 | 共 {len(solution.routes)} 辆车")
@@ -49,6 +69,11 @@ class SimulationApp:
         self.colors = self._generate_distinct_colors(num_routes)
 
     def _generate_distinct_colors(self, n):
+        """
+        生成不同的颜色
+        :param n: 颜色数量
+        :return: List[Tuple[int, int, int]]: 颜色列表
+        """
         colors = []
         for i in range(n):
             hue = (i * 0.618033988749895) % 1.0
@@ -57,6 +82,9 @@ class SimulationApp:
         return colors
 
     def _precompute_all(self):
+        """
+        预计算所有车辆的平滑路径和节点到达帧率
+        """
         depot_node = next(n for n in self.nodes if n.is_depot)
 
         for route in self.solution.routes:
@@ -88,11 +116,18 @@ class SimulationApp:
             self.node_arrival_frames.append(arrival_dict)
 
     def _get_visible_max_len(self):
+        """
+        获取可见路径的最大长度
+        :return: int: 最大路径长度
+        """
         # 对应你原版的多车同步时间线逻辑
         lengths = [len(self.full_paths[i]) for i in range(len(self.full_paths)) if self.route_visible[i]]
         return max(lengths, default=0)
 
     def draw(self):
+        """
+        绘制界面
+        """
         self.screen.fill(COLOR_BG)
 
         # 1. 地图背景和障碍物
@@ -146,6 +181,9 @@ class SimulationApp:
         pygame.display.flip()
 
     def _draw_ui(self):
+        """
+        绘制用户界面
+        """
         # 面板底色
         pygame.draw.rect(self.screen, (50, 50, 50), (self.panel_x, 0, 250, WINDOW_HEIGHT))
         pygame.draw.line(self.screen, (255, 255, 255), (self.panel_x, 0), (self.panel_x, WINDOW_HEIGHT), 2)
@@ -188,6 +226,9 @@ class SimulationApp:
                          (self.panel_x + 20, status_y + 65))
 
     def run(self):
+        """
+        运行应用
+        """
         while True:
             visible_max_len = self._get_visible_max_len()
             if self.is_playing:

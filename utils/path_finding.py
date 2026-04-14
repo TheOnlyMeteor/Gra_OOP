@@ -1,12 +1,33 @@
+"""
+路径规划文件
+该文件实现了PathFinder类，用于路径规划和距离矩阵计算。
+主要功能包括：
+1. 使用Dijkstra算法计算节点间的最短距离矩阵
+2. 使用A*算法寻找两个点之间的最短路径
+@Author: Met
+@Date: 2026-03-12
+"""
 import heapq
 import numpy as np
 
 class PathFinder:
+    """路径规划器"""
+
     def __init__(self, grid):
+        """
+        初始化路径规划器
+        :param grid: 网格地图
+        """
         self.grid = grid
+        #八方向移动，竖直水平1.0，斜线1.414
         self.moves = [(0,1,1.0),(0,-1,1.0),(1,0,1.0),(-1,0,1.0),(1,1,1.414),(1,-1,1.414),(-1,1,1.414),(-1,-1,1.414)]
 
     def dijkstra_matrix(self, nodes):
+        """
+        计算节点间的最短距离矩阵
+        :param nodes: 节点列表
+        :return: np.ndarray: 距离矩阵
+        """
         num = len(nodes)
         matrix = np.zeros((num, num))
         for i in range(num):
@@ -16,6 +37,11 @@ class PathFinder:
         return matrix
 
     def _dijkstra(self, start):
+        """
+        Dijkstra算法计算最短路径
+        :param start: 起点坐标
+        :return: np.ndarray: 到每个点的最短距离
+        """
         dists = np.full(self.grid.shape, float('inf'))
         dists[start] = 0
         pq = [(0, start[0], start[1])]
@@ -30,10 +56,13 @@ class PathFinder:
                         heapq.heappush(pq, (d+c, nx, ny))
         return dists
 
-    # utils/path_finding.py
-
     def get_a_star_path(self, start: tuple[int, int], end: tuple[int, int]) -> list[tuple[int, int]]:
-        """A* 寻路算法实现"""
+        """
+        A* 寻路算法实现
+        :param start: 起点坐标
+        :param end: 终点坐标
+        :return: list[tuple[int, int]]: 路径坐标列表
+        """
         if start == end: return [start]
 
         open_set = []
@@ -67,9 +96,21 @@ class PathFinder:
         return []  # 没找到路
 
     def _heuristic(self, p1, p2):
+        """
+        计算启发式距离
+        :param p1: 第一个点的坐标
+        :param p2: 第二个点的坐标
+        :return: float: 欧几里得距离
+        """
         return ((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) ** 0.5
 
     def _reconstruct_path(self, came_from, current):
+        """
+        重建路径
+        :param came_from: 路径来源字典
+        :param current: 当前位置
+        :return: list[tuple[int, int]]: 路径坐标列表
+        """
         total_path = [current]
         while current in came_from:
             current = came_from[current]

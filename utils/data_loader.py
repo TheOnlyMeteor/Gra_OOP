@@ -1,13 +1,29 @@
-# utils/data_loader.py
+"""
+数据加载器文件
+该文件实现了DataLoader类，用于加载和解析VRP问题数据和网格地图。
+主要功能包括：
+1. 加载VRP文件，解析节点坐标、需求和仓库信息
+2. 加载网格地图文件，用于路径规划
+@Author: Met
+@Date: 2026-03-12
+"""
 import os
 import numpy as np
 from core.models import Node
 
 
 class DataLoader:
+    """
+    数据加载器
+    """
     @staticmethod
     def load_vrp(path):
-        """解析VRP文件"""
+        """
+        解析VRP文件
+        :param path: VRP文件路径
+        :return: Tuple[List[Node], int, int]: 节点列表、车辆容量和仓库ID
+        :raise FileNotFoundError: 如果文件不存在
+        """
         if not os.path.exists(path):
             raise FileNotFoundError(f"找不到文件: {path}")
 
@@ -18,7 +34,7 @@ class DataLoader:
 
         # 预存坐标和需求，最后统一创建对象
         coords = {}
-        demands = {}
+        garbage_volume = {}
 
         with open(path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -44,7 +60,7 @@ class DataLoader:
                     parts = line.split()
                     if len(parts) >= 2:
                         idx = int(parts[0]) - 1
-                        demands[idx] = int(parts[1])
+                        garbage_volume[idx] = int(parts[1])
                 elif section == "DEPOT":
                     if line != "-1" and line.isdigit():
                         depot_id = int(line) - 1
@@ -55,7 +71,7 @@ class DataLoader:
                 node_id=idx,
                 x=coords[idx][0],
                 y=coords[idx][1],
-                demand=demands.get(idx, 0),
+                garbage_volume=garbage_volume.get(idx, 0),
                 is_depot=(idx == depot_id)
             )
             nodes.append(new_node)
@@ -64,7 +80,11 @@ class DataLoader:
 
     @staticmethod
     def load_grid_map(path):
-        """读取地图"""
+        """
+        读取网格地图
+        :param path: 地图文件路径
+        :return: np.ndarray: 网格地图数组
+        """
         if not os.path.exists(path):
             return np.zeros((101, 101), dtype=int)
         return np.loadtxt(path, dtype=int)

@@ -1,12 +1,32 @@
+"""
+路径分割逻辑文件
+
+该文件实现了Prins分割器，用于将染色体（巨型巡游序列）分割成多条满足容量约束的最优路径。
+Prins分割器使用动态规划方法，能够找到分割点的最优组合。
+
+@Author: Met
+@Date: 2026-03-12
+"""
 from typing import List, Tuple
 import numpy as np
 from .models import Route
 
 
 class PrinsSplitter:
+    """Prins分割器"""
     @staticmethod
-    def split(tour: List[int], matrix: np.ndarray, demands: List[int],
+    def split(tour: List[int], matrix: np.ndarray, garbage_volume: List[int],
               capacity: int, depot_id: int) -> Tuple[float, List[Route]]:
+        """
+        Prins分割算法
+        使用动态规划方法将染色体（巨型巡游序列）分割成多条满足容量约束的最优路径
+        :param tour: 客户访问序列
+        :param matrix: 距离矩阵
+        :param garbage_volume: 需求列表
+        :param capacity: 车辆容量
+        :param depot_id: 仓库ID
+        :return: Tuple[float, List[Route]]: 总成本和路径列表
+        """
         n = len(tour)
         if n == 0: return 0.0, []
 
@@ -23,7 +43,7 @@ class PrinsSplitter:
             route_dist = 0.0
             for j in range(i, 0, -1):
                 curr_node = tour[j - 1]
-                load += demands[curr_node]
+                load += garbage_volume[curr_node]
                 if load > capacity: break
 
                 if j < i:

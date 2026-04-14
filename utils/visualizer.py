@@ -1,14 +1,33 @@
+"""
+可视化工具文件
+该文件实现了GAVisualizer类，用于可视化遗传算法的进化过程和解决方案。
+主要功能包括：
+1. 绘制不同求解器的进化曲线对比
+2. 绘制详细的路线图，包括节点标号和路径方向
+@Author: Met
+@Date: 2026-03-12
+"""
 import matplotlib.pyplot as plt
 import os
 
 
 class GAVisualizer:
+    """遗传算法可视化工具"""
+
     def __init__(self, title: str):
+        """
+        初始化可视化工具
+        :param title: 标题
+        """
         self.title = title
 
-    # ... plot_comparison 方法保持不变 ...
     def plot_comparison(self, solvers_dict: dict, save_path: str):
-        """绘制历史进化曲线"""
+        """
+        绘制历史进化曲线
+        :param solvers_dict: 求解器字典，键为求解器名称，值为求解器对象
+        :param save_path: 保存路径
+        :return:
+        """
         plt.figure(figsize=(10, 6))
         for label, solver in solvers_dict.items():
             plt.plot(range(1, len(solver.history) + 1), solver.history, label=label)
@@ -24,8 +43,11 @@ class GAVisualizer:
     def plot_solution_routes(self, nodes: list, solution, save_path: str, solver_name: str):
         """
         绘制详细的路线图（使用全局标号）
-        nodes: Node对象列表
-        solution: Solution对象
+        :param nodes: Node对象列表
+        :param solution: Solution对象
+        :param save_path: 保存路径
+        :param solver_name: 求解器名称
+        :return:
         """
         plt.figure(figsize=(14, 11))
 
