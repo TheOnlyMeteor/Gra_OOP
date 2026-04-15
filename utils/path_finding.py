@@ -31,12 +31,12 @@ class PathFinder:
         num = len(nodes)
         matrix = np.zeros((num, num))
         for i in range(num):
-            dists = self._dijkstra((nodes[i].x, nodes[i].y))
+            dists = self.__dijkstra((nodes[i].x, nodes[i].y))
             for j in range(num):
                 matrix[i][j] = dists[nodes[j].x][nodes[j].y]
         return matrix
 
-    def _dijkstra(self, start):
+    def __dijkstra(self, start):
         """
         Dijkstra算法计算最短路径
         :param start: 起点坐标
@@ -71,14 +71,14 @@ class PathFinder:
         came_from = {}
 
         g_score = {start: 0}
-        f_score = {start: self._heuristic(start, end)}
+        f_score = {start: self.__heuristic(start, end)}
         count = 0
 
         while open_set:
             curr = heapq.heappop(open_set)[2]
 
             if curr == end:
-                return self._reconstruct_path(came_from, curr)
+                return self.__reconstruct_path(came_from, curr)
 
             for dx, dy, cost in self.moves:
                 neighbor = (curr[0] + dx, curr[1] + dy)
@@ -90,12 +90,12 @@ class PathFinder:
                     if temp_g < g_score.get(neighbor, float('inf')):
                         came_from[neighbor] = curr
                         g_score[neighbor] = temp_g
-                        f_score[neighbor] = temp_g + self._heuristic(neighbor, end)
+                        f_score[neighbor] = temp_g + self.__heuristic(neighbor, end)
                         count += 1
                         heapq.heappush(open_set, (f_score[neighbor], count, neighbor))
         return []  # 没找到路
 
-    def _heuristic(self, p1, p2):
+    def __heuristic(self, p1, p2):
         """
         计算启发式距离
         :param p1: 第一个点的坐标
@@ -104,7 +104,7 @@ class PathFinder:
         """
         return ((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) ** 0.5
 
-    def _reconstruct_path(self, came_from, current):
+    def __reconstruct_path(self, came_from, current):
         """
         重建路径
         :param came_from: 路径来源字典

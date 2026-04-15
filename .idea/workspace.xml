@@ -4,27 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v1.1,添加路线图和适应度对比图">
-      <change afterPath="$PROJECT_DIR$/controllers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system_ui.py" afterDir="false" />
+    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v1.5初始版本 带UI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/base_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/base_solver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/ga_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/pure_ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/pure_ga_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/pure_ga_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/pure_ga_logic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/split_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/split_logic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/output/fitness_comparison.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/output/fitness_comparison.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/output/routes_improved.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/output/routes_improved.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/output/routes_pure.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/output/routes_pure.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/components.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui/components.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gui/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/renderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/data_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/system_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/path_finding.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/path_finding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/visualizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/visualizer.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,25 +54,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ga_engine.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.mp2_success.executor": "Run",
-    "Python.renderer.executor": "Run",
-    "Python.system_ui.executor": "Run",
-    "Python.visualizer.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/University/Graduate/Project/cvrppy/CVRP_pro/data/input",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ga_engine.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mp2_success.executor&quot;: &quot;Run&quot;,
+    &quot;Python.renderer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.system_ui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.visualizer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/University/Graduate/Project/cvrppy/CVRP_pro/data/input&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\University\Graduate\Project\cvrppy\CVRP_pro\data\input" />
@@ -110,7 +102,9 @@
       <workItem from="1775967330407" duration="548000" />
       <workItem from="1775976248564" duration="10056000" />
       <workItem from="1776088861223" duration="614000" />
-      <workItem from="1776141413494" duration="12577000" />
+      <workItem from="1776141413494" duration="13621000" />
+      <workItem from="1776171376056" duration="3887000" />
+      <workItem from="1776227088314" duration="15453000" />
     </task>
     <task id="LOCAL-00001" summary="v1.1,添加路线图和适应度对比图">
       <option name="closed" value="true" />
@@ -120,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775967451921</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v1.5初始版本 带UI">
+      <option name="closed" value="true" />
+      <created>1776169476103</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776169476103</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,13 +155,14 @@
     <MESSAGE value="第一代初始版本，缺乏适应度对比图和路线图" />
     <MESSAGE value="第一代初始版本，缺路线图和适应度对比图" />
     <MESSAGE value="v1.1,添加路线图和适应度对比图" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.1,添加路线图和适应度对比图" />
+    <MESSAGE value="v1.5初始版本 带UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.5初始版本 带UI" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CVRP_pro$ga_engine.coverage" NAME="ga_engine Coverage Results" MODIFIED="1775829983459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
     <SUITE FILE_PATH="coverage/CVRP_pro$mp2_success.coverage" NAME="mp2_success Coverage Results" MODIFIED="1775817814764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/input" />
-    <SUITE FILE_PATH="coverage/CVRP_pro$system_ui.coverage" NAME="system_ui Coverage Results" MODIFIED="1776158284469" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CVRP_pro$main.coverage" NAME="main Coverage Results" MODIFIED="1776169262274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$system_ui.coverage" NAME="system_ui Coverage Results" MODIFIED="1776171664178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$main.coverage" NAME="main Coverage Results" MODIFIED="1776250371361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CVRP_pro$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1776168591166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
     <SUITE FILE_PATH="coverage/CVRP_pro$visualizer.coverage" NAME="visualizer Coverage Results" MODIFIED="1775824062743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>

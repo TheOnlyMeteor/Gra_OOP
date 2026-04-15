@@ -84,8 +84,8 @@ class PureGASolver(BaseGASolver):
         rate = self.cfg.MUT_START - (self.cfg.MUT_START - self.cfg.MUT_END) * (gen / self.cfg.GENERATIONS)
 
         while len(next_gen) < self.cfg.POP_SIZE:
-            p1, p2 = self._tournament_select(), self._tournament_select()
-            child_chromo = self._ox_crossover(p1.chromosome, p2.chromosome)
+            p1, p2 = self.__tournament_select(), self.__tournament_select()
+            child_chromo = self.__ox_crossover(p1.chromosome, p2.chromosome)
             child_chromo = self._mutate(child_chromo, rate)
             next_gen.append(Solution(child_chromo))
 
@@ -93,7 +93,7 @@ class PureGASolver(BaseGASolver):
         self.population.sort(key=lambda x: x.total_cost)
         self.record_history()
 
-    def _tournament_select(self):
+    def __tournament_select(self):
         """
         锦标赛选择
         随机选择两个个体，返回适应度较好的一个
@@ -102,7 +102,7 @@ class PureGASolver(BaseGASolver):
         a, b = random.sample(self.population, 2)
         return a if a.total_cost < b.total_cost else b
 
-    def _ox_crossover(self, p1, p2):
+    def __ox_crossover(self, p1, p2):
         """
         OX交叉操作
         :param p1: 父代1的染色体

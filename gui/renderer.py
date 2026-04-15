@@ -49,7 +49,7 @@ class SimulationApp:
         print("正在后台计算多车避障平滑路径（A*），请稍候...")
         self.full_paths = []
         self.node_arrival_frames = []
-        self._precompute_all()
+        self.__precompute_all()
 
         # --- [核心恢复] 2. 滚动条 UI 参数 ---
         self.panel_x = COLS * CELL_SIZE
@@ -66,9 +66,9 @@ class SimulationApp:
         # 按钮与复选框
         self.toggle_all_rect = pygame.Rect(self.panel_x + 20, 20, 120, 35)
         self.route_visible = [True] * num_routes
-        self.colors = self._generate_distinct_colors(num_routes)
+        self.colors = self.__generate_distinct_colors(num_routes)
 
-    def _generate_distinct_colors(self, n):
+    def __generate_distinct_colors(self, n):
         """
         生成不同的颜色
         :param n: 颜色数量
@@ -81,7 +81,7 @@ class SimulationApp:
             colors.append((int(r * 255), int(g * 255), int(b * 255)))
         return colors
 
-    def _precompute_all(self):
+    def __precompute_all(self):
         """
         预计算所有车辆的平滑路径和节点到达帧率
         """
@@ -115,7 +115,7 @@ class SimulationApp:
                     arrival_dict[node_id] = 0
             self.node_arrival_frames.append(arrival_dict)
 
-    def _get_visible_max_len(self):
+    def __get_visible_max_len(self):
         """
         获取可见路径的最大长度
         :return: int: 最大路径长度
@@ -176,11 +176,11 @@ class SimulationApp:
                     pygame.draw.circle(self.screen, self.colors[i], (px, py), CELL_SIZE // 2 + 2)
 
         # 5. 右侧 UI 控制面板（包含滚动条）
-        self._draw_ui()
+        self.__draw_ui()
 
         pygame.display.flip()
 
-    def _draw_ui(self):
+    def __draw_ui(self):
         """
         绘制用户界面
         """
@@ -230,7 +230,7 @@ class SimulationApp:
         运行应用
         """
         while True:
-            visible_max_len = self._get_visible_max_len()
+            visible_max_len = self.__get_visible_max_len()
             if self.is_playing:
                 self.anim_frame += 1
                 if self.anim_frame >= visible_max_len:

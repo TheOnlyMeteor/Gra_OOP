@@ -47,12 +47,12 @@ class GASolver(BaseGASolver):
         """
         for i in range(self.cfg.POP_SIZE):
             if i < self.cfg.POP_SIZE // 2:
-                tour = self._nn_heuristic()
+                tour = self.__nn_heuristic()
             else:
                 tour = random.sample(self.customers, len(self.customers))
             self.population.append(Solution(tour))
 
-    def _nn_heuristic(self):
+    def __nn_heuristic(self):
         """
         最近邻启发式算法生成初始解
         :return: List[int]: 生成的客户访问序列
@@ -88,7 +88,7 @@ class GASolver(BaseGASolver):
             r.update_stats(self.demands)  # 更新载重
 
         # 3. Local Search (Inter-route - 务实地写在这里提升速度)
-        self._inter_route_swap(routes)
+        self.__inter_route_swap(routes)
 
         # 4. 写回属性
         sol.routes = routes
@@ -98,7 +98,7 @@ class GASolver(BaseGASolver):
         # 5. 存入缓存
         self.fitness_cache[key] = (sol.total_cost, sol.routes, sol.chromosome)
 
-    def _inter_route_swap(self, routes: List[Route]):
+    def __inter_route_swap(self, routes: List[Route]):
         """
         不同路径间的节点交换优化
         尝试在不同路径之间交换节点，以减少总成本
@@ -151,17 +151,17 @@ class GASolver(BaseGASolver):
 
         # 3. 繁殖
         while len(next_gen) < self.cfg.POP_SIZE:
-            p1 = self._tournament()
-            p2 = self._tournament()
-            child_chromo = self._ox_crossover(p1.chromosome, p2.chromosome)
-            child_chromo = self._mutate(child_chromo, rate)
+            p1 = self.__tournament()
+            p2 = self.__tournament()
+            child_chromo = self.__ox_crossover(p1.chromosome, p2.chromosome)
+            child_chromo = self.__mutate(child_chromo, rate)
             next_gen.append(Solution(child_chromo))
 
         self.population = next_gen
         self.population.sort() #使用模型内置的__lt__排序
         self.record_history() #统一记录历史
 
-    def _tournament(self):
+    def __tournament(self):
         """
         锦标赛选择
         随机选择两个个体，返回适应度较好的一个
@@ -170,7 +170,7 @@ class GASolver(BaseGASolver):
         a, b = random.sample(self.population, 2)
         return a if a.total_cost < b.total_cost else b
 
-    def _ox_crossover(self, p1, p2):
+    def __ox_crossover(self, p1, p2):
         """
         OX交叉操作
         :param p1: 父代1的染色体
@@ -189,7 +189,7 @@ class GASolver(BaseGASolver):
                 idx += 1
         return child
 
-    def _mutate(self, chromo, rate):
+    def __mutate(self, chromo, rate):
         """
         变异操作
         :param chromo: 染色体
