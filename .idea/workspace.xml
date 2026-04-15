@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v1.5初始版本 带UI">
+    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v2.0 初始版本 添加注释">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/ga_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/pure_ga_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/pure_ga_engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/split_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/split_logic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/components.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui/renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/system_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/path_finding.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/path_finding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/visualizer.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +93,8 @@
       <workItem from="1776088861223" duration="614000" />
       <workItem from="1776141413494" duration="13621000" />
       <workItem from="1776171376056" duration="3887000" />
-      <workItem from="1776227088314" duration="15453000" />
+      <workItem from="1776227088314" duration="16010000" />
+      <workItem from="1776254212914" duration="18000" />
     </task>
     <task id="LOCAL-00001" summary="v1.1,添加路线图和适应度对比图">
       <option name="closed" value="true" />
@@ -122,7 +112,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776169476103</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v2.0 初始版本 添加注释">
+      <option name="closed" value="true" />
+      <created>1776253905649</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776253905649</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,7 +154,8 @@
     <MESSAGE value="第一代初始版本，缺路线图和适应度对比图" />
     <MESSAGE value="v1.1,添加路线图和适应度对比图" />
     <MESSAGE value="v1.5初始版本 带UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.5初始版本 带UI" />
+    <MESSAGE value="v2.0 初始版本 添加注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.0 初始版本 添加注释" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CVRP_pro$ga_engine.coverage" NAME="ga_engine Coverage Results" MODIFIED="1775829983459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
