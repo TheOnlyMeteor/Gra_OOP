@@ -130,25 +130,55 @@ class SystemMainWindow(tk.Tk):
 
         ttk.Button(top, text="保存修改", command=save).grid(row=5, column=0, columnspan=2, pady=15)
 
+    # def apply_changes(self):
+    #     """
+    #     应用更改并重算网络
+    #     将表格中的数据更新到控制器，并重新计算距离矩阵
+    #     """
+    #     data = [self.tree.item(child)["values"] for child in self.tree.get_children()]
+    #
+    #     # 有且仅有一个车场
+    #     depot_count = sum(1 for item in data if item[1] == "垃圾处理车场")
+    #     if depot_count != 1:
+    #         messagebox.showerror("业务验证失败",
+    #                              f"系统中必须有且仅有 1 个【垃圾处理车场】！当前有 {depot_count} 个。请修改节点类型。")
+    #         return
+    #
+    #     self.controller.update_nodes_from_ui(data)
+    #
+    #     # 更新完毕后，立即重绘数据表，利用 Controller 返回的干净连续的 IDs 更新前端
+    #     self.refresh_data_table()
+    #     messagebox.showinfo("成功", "更改已应用！系统已为您自动重排节点ID，底层连通图与距离矩阵重建完成。")
     def apply_changes(self):
         """
         应用更改并重算网络
-        将表格中的数据更新到控制器，并重新计算距离矩阵
+        将表格中的数据更新到控制器，并在更新前进行严格的业务逻辑校验
         """
         data = [self.tree.item(child)["values"] for child in self.tree.get_children()]
 
-        # 有且仅有一个车场
+        # 1. 业务验证：车场唯一性拦截
         depot_count = sum(1 for item in data if item[1] == "垃圾处理车场")
         if depot_count != 1:
             messagebox.showerror("业务验证失败",
                                  f"系统中必须有且仅有 1 个【垃圾处理车场】！当前有 {depot_count} 个。请修改节点类型。")
             return
 
+        # 2. 逻辑验证：单点垃圾量不可大于单车最大载重拦截
+        vehicle_capacity = self.controller.capacity
+        for item in data:
+            if item[1] == "垃圾收运点" and int(item[4]) > vehicle_capacity:
+                messagebox.showerror("容量逻辑错误",
+                                     f"显示 ID 为 {item[0]} 的垃圾量 ({item[4]}kg) 超出了单辆车的最大额定载重 ({vehicle_capacity}kg)！\n\n"
+                                     "这会导致底层 Prins 动态规划算法无法完成切分计算，引发程序崩溃。\n"
+                                     "请将该大型垃圾点拆分为多个节点，或调小垃圾量后再试。")
+                return
+
+        # 所有验证通过，将干净的数据推送到控制层处理
         self.controller.update_nodes_from_ui(data)
 
         # 更新完毕后，立即重绘数据表，利用 Controller 返回的干净连续的 IDs 更新前端
         self.refresh_data_table()
-        messagebox.showinfo("成功", "更改已应用！系统已为您自动重排节点ID，底层连通图与距离矩阵重建完成。")
+        messagebox.showinfo("成功", "更改已成功应用！系统已自动为您重排底层连续节点 ID，连通图与距离代价矩阵重建完成。")
 
     # def apply_changes(self):
     #
