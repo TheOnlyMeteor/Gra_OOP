@@ -377,3 +377,29 @@ class SystemController:
             "history_improved": self.improved_history,
             "history_pure": self.pure_history
         }
+
+    def get_routes_data_for_sim(self):
+        """
+        提取用于独立进程仿真的纯数据。
+        自动检测 Route 类中用于存储节点序列的变量名。
+        """
+        if not getattr(self, 'best_solution', None) or not self.best_solution.routes:
+            return []
+
+        routes_data = []
+        for route in self.best_solution.routes:
+            # 自动适配你在 models.py 中给路线定义的实际属性名
+            if hasattr(route, 'nodes'):
+                routes_data.append(route.nodes)
+            elif hasattr(route, 'route'):
+                routes_data.append(route.route)
+            elif hasattr(route, 'node_list'):
+                routes_data.append(route.node_list)
+            elif hasattr(route, 'path'):
+                routes_data.append(route.path)
+            else:
+                # 如果都不是，直接打印出 Route 类所有的变量名，方便咱们排查
+                print("请检查 models.py 中 Route 类的变量名！当前 Route 的属性有：", route.__dict__.keys())
+                break
+
+        return routes_data

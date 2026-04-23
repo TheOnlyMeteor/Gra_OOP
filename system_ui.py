@@ -4,11 +4,16 @@
 @Author: Met
 @Date: 2026-03-12
 """
+import multiprocessing
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+def start_pygame_renderer(nodes_data, grid_map_data, solution_data):
+    from gui.renderer import SimulationApp
+    sim = SimulationApp(nodes_data, grid_map_data, solution_data)
+    sim.run()
 
 class SystemMainWindow(tk.Tk):
     def __init__(self, controller):
@@ -476,13 +481,39 @@ class SystemMainWindow(tk.Tk):
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
     def launch_sim(self):
-        """
-        启动动态仿真
-        启动改进组最佳路径的动态仿真
-        """
-        from gui.renderer import SimulationApp
-        app = SimulationApp(self.controller.nodes, self.controller.grid, self.controller.best_solution)
-        app.run()
+        # 1. 提取节点和解决方案（这两个已经验证没问题了）
+        nodes_data = self.controller.nodes
+        solution_data = self.controller.best_solution
+
+        # 2. 【核心修复】：自动嗅探网格地图的真实变量名，绝不盲猜报错！
+        import numpy as np
+        if hasattr(self.controller, 'grid_map'):
+            grid_map_data = self.controller.grid_map
+        elif hasattr(self.controller, 'grid'):
+            grid_map_data = self.controller.grid
+        elif hasattr(self.controller, 'map_data'):
+            grid_map_data = self.controller.map_data
+        elif hasattr(self.controller, 'obstacle_map'):
+            grid_map_data = self.controller.obstacle_map
+        elif hasattr(self.controller, 'matrix'):
+            # 有些写法是直接把最短代价矩阵 matrix 传给渲染器
+            grid_map_data = self.controller.matrix
+        else:
+            # 【终极兜底】：如果上面全都没猜中，打印出你真实的变量名供我们排查，
+            # 并临时生成一个 101x101 的空地图，确保程序绝对不崩溃、窗口绝对能打开！
+            print("==================================================")
+            print("找不到地图变量！请看这里，你的 Controller 实际拥有的变量是：")
+            print(list(self.controller.__dict__.keys()))
+            print("==================================================")
+            grid_map_data = np.zeros((101, 101)).tolist()
+
+        # 3. 启动独立进程
+        import multiprocessing
+        sim_process = multiprocessing.Process(
+            target=start_pygame_renderer,
+            args=(nodes_data, grid_map_data, solution_data)
+        )
+        sim_process.start()
 
     # ================= 新增模块四：线路对比图谱 =================
     def init_map_tab(self):

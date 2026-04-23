@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v2.0.2 小修改">
+    <list default="true" id="89c3c55e-a19f-4397-9b37-9a42ac18aeb4" name="Changes" comment="v2.1 修复了更新节点导致的错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/system_ui.py" afterDir="false" />
@@ -46,27 +46,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.__init__.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.controllers.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ga_engine.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mp2_success.executor&quot;: &quot;Run&quot;,
-    &quot;Python.renderer.executor&quot;: &quot;Run&quot;,
-    &quot;Python.system_ui.executor&quot;: &quot;Run&quot;,
-    &quot;Python.visualizer.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/University/Graduate/Project/cvrppy/CVRP_pro/data/input&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.__init__.executor": "Debug",
+    "Python.controllers.executor": "Run",
+    "Python.ga_engine.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mp2_success.executor": "Run",
+    "Python.pure_ga_logic.executor": "Run",
+    "Python.renderer.executor": "Run",
+    "Python.system_ui.executor": "Run",
+    "Python.visualizer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/University/Graduate/Project/cvrppy/CVRP_pro/data/input",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\University\Graduate\Project\cvrppy\CVRP_pro\data\input" />
@@ -109,6 +110,7 @@
       <workItem from="1776750375607" duration="7000" />
       <workItem from="1776757915591" duration="1830000" />
       <workItem from="1776862467540" duration="1362000" />
+      <workItem from="1776913873206" duration="7726000" />
     </task>
     <task id="LOCAL-00001" summary="v1.1,添加路线图和适应度对比图">
       <option name="closed" value="true" />
@@ -190,12 +192,13 @@
     <option name="LAST_COMMIT_MESSAGE" value="v2.0.2 小修改" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CVRP_pro$controllers.coverage" NAME="controllers Coverage Results" MODIFIED="1776326481138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$controllers.coverage" NAME="controllers Coverage Results" MODIFIED="1776949779516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CVRP_pro$ga_engine.coverage" NAME="ga_engine Coverage Results" MODIFIED="1775829983459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
     <SUITE FILE_PATH="coverage/CVRP_pro$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1776429729350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/AppData/Local/Programs/Python/Python39/Lib/tkinter" />
     <SUITE FILE_PATH="coverage/CVRP_pro$mp2_success.coverage" NAME="mp2_success Coverage Results" MODIFIED="1775817814764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/input" />
-    <SUITE FILE_PATH="coverage/CVRP_pro$system_ui.coverage" NAME="system_ui Coverage Results" MODIFIED="1776325825685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CVRP_pro$main.coverage" NAME="main Coverage Results" MODIFIED="1776864676985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$system_ui.coverage" NAME="system_ui Coverage Results" MODIFIED="1776950951188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$pure_ga_logic.coverage" NAME="pure_ga_logic Coverage Results" MODIFIED="1776943698913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
+    <SUITE FILE_PATH="coverage/CVRP_pro$main.coverage" NAME="main Coverage Results" MODIFIED="1776951477983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CVRP_pro$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1776168591166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
     <SUITE FILE_PATH="coverage/CVRP_pro$visualizer.coverage" NAME="visualizer Coverage Results" MODIFIED="1775824062743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
