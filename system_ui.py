@@ -5,6 +5,7 @@
 @Date: 2026-03-12
 """
 import multiprocessing
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
@@ -135,25 +136,6 @@ class SystemMainWindow(tk.Tk):
 
         ttk.Button(top, text="保存修改", command=save).grid(row=5, column=0, columnspan=2, pady=15)
 
-    # def apply_changes(self):
-    #     """
-    #     应用更改并重算网络
-    #     将表格中的数据更新到控制器，并重新计算距离矩阵
-    #     """
-    #     data = [self.tree.item(child)["values"] for child in self.tree.get_children()]
-    #
-    #     # 有且仅有一个车场
-    #     depot_count = sum(1 for item in data if item[1] == "垃圾处理车场")
-    #     if depot_count != 1:
-    #         messagebox.showerror("业务验证失败",
-    #                              f"系统中必须有且仅有 1 个【垃圾处理车场】！当前有 {depot_count} 个。请修改节点类型。")
-    #         return
-    #
-    #     self.controller.update_nodes_from_ui(data)
-    #
-    #     # 更新完毕后，立即重绘数据表，利用 Controller 返回的干净连续的 IDs 更新前端
-    #     self.refresh_data_table()
-    #     messagebox.showinfo("成功", "更改已应用！系统已为您自动重排节点ID，底层连通图与距离矩阵重建完成。")
     def apply_changes(self):
         """
         应用更改并重算网络
@@ -184,79 +166,6 @@ class SystemMainWindow(tk.Tk):
         # 更新完毕后，立即重绘数据表，利用 Controller 返回的干净连续的 IDs 更新前端
         self.refresh_data_table()
         messagebox.showinfo("成功", "更改已成功应用！系统已自动为您重排底层连续节点 ID，连通图与距离代价矩阵重建完成。")
-
-    # def apply_changes(self):
-    #
-    #     data = [self.tree.item(child)["values"] for child in self.tree.get_children()]
-    #     self.controller.update_nodes_from_ui(data)
-    #     self.refresh_data_table()
-    #     messagebox.showinfo("成功", "更改已应用，距离网络重算完成！")
-
-    # def init_data_tab(self):
-    #     """
-    #     初始化数据管理标签页
-    #     创建垃圾点信息管理界面，包括CRUD操作和文件导入导出功能
-    #     """
-    #     frame = ttk.Frame(self.notebook)
-    #     self.notebook.add(frame, text=" 垃圾点信息管理 ")
-    #
-    #     toolbar = ttk.Frame(frame)
-    #     toolbar.pack(fill=tk.X, pady=10, padx=10)
-    #
-    #     ttk.Button(toolbar, text="➕ 新增节点", command=self.add_node).pack(side=tk.LEFT, padx=5)
-    #     ttk.Button(toolbar, text="✏️ 修改选中", command=self.edit_node).pack(side=tk.LEFT, padx=5)
-    #     ttk.Button(toolbar, text="🗑️ 删除选中", command=self.delete_node).pack(side=tk.LEFT, padx=5)
-    #
-    #     ttk.Label(toolbar, text=" | ").pack(side=tk.LEFT)
-    #     ttk.Button(toolbar, text="📂 导入CSV", command=self.import_csv).pack(side=tk.LEFT, padx=5)
-    #     ttk.Button(toolbar, text="💾 导出CSV", command=self.export_csv).pack(side=tk.LEFT, padx=5)
-    #
-    #     ttk.Button(toolbar, text="✅ 应用更改并重算网络", command=self.apply_changes).pack(side=tk.RIGHT, padx=5)
-    #
-    #     columns = ("ID", "节点类型", "X坐标", "Y坐标", "垃圾量(kg)")
-    #     self.tree = ttk.Treeview(frame, columns=columns, show="headings", height=18)
-    #     for col in columns:
-    #         self.tree.heading(col, text=col)
-    #         self.tree.column(col, anchor=tk.CENTER)
-    #     self.tree.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
-
-    # def refresh_data_table(self):
-    #     """
-    #     刷新数据表格
-    #     从控制器获取最新的垃圾点数据并更新表格显示
-    #     """
-    #     for item in self.tree.get_children():
-    #         self.tree.delete(item)
-    #     for row in self.controller.get_garbage_points_data():
-    #         self.tree.insert("", tk.END, values=row)
-    #
-    # def add_node(self):
-    #     """
-    #     新增垃圾点
-    #     打开新增垃圾点对话框
-    #     """
-    #     self.__open_node_dialog("新增垃圾点", None)
-    #
-    # def edit_node(self):
-    #     """
-    #     修改选中的垃圾点
-    #     打开修改垃圾点对话框，编辑选中的节点信息
-    #     """
-    #     selected = self.tree.selection()
-    #     if not selected:
-    #         messagebox.showwarning("提示", "请先选择要修改的节点！")
-    #         return
-    #     item = self.tree.item(selected[0])['values']
-    #     self.__open_node_dialog("修改垃圾点", item, selected[0])
-    #
-    # def delete_node(self):
-    #     """
-    #     删除选中的垃圾点
-    #     删除表格中选中的节点
-    #     """
-    #     selected = self.tree.selection()
-    #     if selected and messagebox.askyesno("确认", "确定要删除该节点吗？"):
-    #         self.tree.delete(selected[0])
 
     def __open_node_dialog(self, title, init_data=None, item_id=None):
         """
@@ -473,6 +382,15 @@ class SystemMainWindow(tk.Tk):
 
         # 调整图表布局
         plt.tight_layout()
+        #保存仪表盘图表
+        os.makedirs("data/output", exist_ok=True)
+        try:
+            #优先保存为高清的SVG矢量图，同时保存一份300PI的PNG备选图
+            fig.savefig("data/output/evolution.svg",format="svg",bbox_inches='tight')
+            fig.savefig("data/output/evolution.png",format="png",dpi=300,bbox_inches='tight')
+            print("✅ 效率评估图表已成功保存到 data/output/ 目录！")
+        except Exception as e:
+            print(f"❌ 保存图表失败: {e}")
         # 创建Matplotlib画布并绑定到Tkinter窗口
         canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
         # 绘制图表
@@ -567,6 +485,14 @@ class SystemMainWindow(tk.Tk):
 
         # 调整图表布局
         plt.tight_layout()
+        #保存双算法路线对比图
+        os.makedirs("data/output", exist_ok=True)
+        try:
+            fig.savefig("data/output/route_map.svg",format="svg",bbox_inches='tight')
+            fig.savefig("data/output/route_map.png",format="png",dpi=300,bbox_inches='tight')
+            print("✅ 线路对比图谱已成功保存到 data/output/ 目录！")
+        except Exception as e:
+            print(f"❌ 保存线路图谱失败: {e}")
         # 创建Matplotlib画布并绑定到Tkinter窗口
         canvas = FigureCanvasTkAgg(fig, master=self.map_canvas_frame)
         # 绘制图表
