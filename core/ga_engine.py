@@ -87,7 +87,7 @@ class GASolver(BaseGASolver):
             r.optimize_2opt()
             r.update_stats(self.demands)  # 更新载重
 
-        # 3. Local Search (Inter-route - 务实地写在这里提升速度)
+        # 3. Local Search (Inter-route )
         self.__inter_route_swap(routes)
 
         # 4. 写回属性

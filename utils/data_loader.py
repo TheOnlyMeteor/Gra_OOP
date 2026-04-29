@@ -126,7 +126,7 @@ class DataLoader:
             for i, route in enumerate(solution.routes):
                 f.write(f"▶ 车辆 {i + 1}:\n")
 
-                # 兼容节点序列的变量命名（自动嗅探 nodes, path, route 等）
+                # 兼容节点序列的变量命名
                 route_seq = getattr(route, 'nodes',
                                     getattr(route, 'path', getattr(route, 'route', getattr(route, 'node_list', []))))
 

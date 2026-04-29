@@ -45,13 +45,13 @@ class SimulationApp:
         self.anim_frame = 0
         self.is_playing = False
 
-        # --- [核心恢复] 1. 预计算所有车辆的平滑路径和节点到达帧率 ---
+        # 1. 预计算所有车辆的平滑路径和节点到达帧率
         print("正在后台计算多车避障平滑路径（A*），请稍候...")
         self.full_paths = []
         self.node_arrival_frames = []
         self.__precompute_all()
 
-        # --- [核心恢复] 2. 滚动条 UI 参数 ---
+        # 2. 滚动条 UI 参数
         self.panel_x = COLS * CELL_SIZE
         self.top_area_height = 70
         self.bottom_area_height = 160
@@ -120,7 +120,6 @@ class SimulationApp:
         获取可见路径的最大长度
         :return: int: 最大路径长度
         """
-        # 对应你原版的多车同步时间线逻辑
         lengths = [len(self.full_paths[i]) for i in range(len(self.full_paths)) if self.route_visible[i]]
         return max(lengths, default=0)
 
@@ -147,7 +146,7 @@ class SimulationApp:
                 points = [(p[0] * CELL_SIZE + CELL_SIZE // 2, p[1] * CELL_SIZE + CELL_SIZE // 2) for p in path_to_draw]
                 pygame.draw.lines(self.screen, self.colors[i], False, points, 3)
 
-        # 3. 动态改变节点颜色 (核心同步恢复)
+        # 3. 动态改变节点颜色
         node_colors = {node.node_id: COLOR_CUST_WAIT for node in self.nodes if not node.is_depot}
         for i in range(len(self.full_paths)):
             if self.route_visible[i]:
@@ -175,7 +174,7 @@ class SimulationApp:
                     pygame.draw.circle(self.screen, (255, 255, 255), (px, py), CELL_SIZE // 2 + 5)
                     pygame.draw.circle(self.screen, self.colors[i], (px, py), CELL_SIZE // 2 + 2)
 
-        # 5. 右侧 UI 控制面板（包含滚动条）
+        # 5. 右侧 UI 控制面板
         self.__draw_ui()
 
         pygame.display.flip()

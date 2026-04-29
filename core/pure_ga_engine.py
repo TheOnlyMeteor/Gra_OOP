@@ -80,7 +80,7 @@ class PureGASolver(BaseGASolver):
         # 3. 精英保留
         next_gen = self.population[:self.cfg.ELITE_SIZE]
 
-        # 4. 进化过程（保持与实验组相同的交叉和变异概率）
+        # 4. 进化过程
         rate = self.cfg.MUT_START - (self.cfg.MUT_START - self.cfg.MUT_END) * (gen / self.cfg.GENERATIONS)
 
         while len(next_gen) < self.cfg.POP_SIZE:

@@ -4,8 +4,8 @@
 @Author: Met
 @Date: 2026-03-12
 """
-import multiprocessing
 import os
+import numpy as np
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
@@ -39,8 +39,7 @@ class SystemMainWindow(tk.Tk):
         self.controller.load_system_data()
         self.refresh_data_table()
 
-    # ================= 模块一：CRUD与文件导入 =================
-        # ================= 模块一：CRUD与文件导入 =================
+    # ================= module_One：CRUD与文件导入 =================
     def init_data_tab(self):
         frame = ttk.Frame(self.notebook)
         self.notebook.add(frame, text=" 📍 垃圾点信息管理 ")
@@ -124,7 +123,6 @@ class SystemMainWindow(tk.Tk):
                 if x < 0 or y < 0 or d < 0:
                     raise ValueError
 
-                # 传入固定的 assigned_id，杜绝了"待分配"字符串
                 values = (assigned_id, type_var.get(), x, y, d)
                 if item_id:
                     self.tree.item(item_id, values=values)
@@ -155,17 +153,15 @@ class SystemMainWindow(tk.Tk):
         for item in data:
             if item[1] == "垃圾收运点" and int(item[4]) > vehicle_capacity:
                 messagebox.showerror("容量逻辑错误",
-                                     f"显示 ID 为 {item[0]} 的垃圾量 ({item[4]}kg) 超出了单辆车的最大额定载重 ({vehicle_capacity}kg)！\n\n"
-                                     "这会导致底层 Prins 动态规划算法无法完成切分计算，引发程序崩溃。\n"
-                                     "请将该大型垃圾点拆分为多个节点，或调小垃圾量后再试。")
+                                     f"显示 ID 为 {item[0]} 的垃圾量 ({item[4]}kg) 超出了单辆车的最大额定载重 ({vehicle_capacity}kg)！\n\n")
                 return
 
-        # 所有验证通过，将干净的数据推送到控制层处理
+        # 所有验证通过，将数据推送到控制层处理
         self.controller.update_nodes_from_ui(data)
 
-        # 更新完毕后，立即重绘数据表，利用 Controller 返回的干净连续的 IDs 更新前端
+        # 更新完毕后,立即重绘数据表，利用 Controller 返回的IDs更新前端
         self.refresh_data_table()
-        messagebox.showinfo("成功", "更改已成功应用！系统已自动为您重排底层连续节点 ID，连通图与距离代价矩阵重建完成。")
+        messagebox.showinfo("成功", "更改已成功应用！")
 
     def __open_node_dialog(self, title, init_data=None, item_id=None):
         """
@@ -234,7 +230,7 @@ class SystemMainWindow(tk.Tk):
             self.controller.export_to_csv(path)
             messagebox.showinfo("成功", "数据导出成功！")
 
-    # ================= 模块二：调度规划 =================
+    # ================= module_two：调度规划 =================
     def init_optimize_tab(self):
         """
         初始化调度规划标签页
@@ -297,7 +293,7 @@ class SystemMainWindow(tk.Tk):
         self.draw_dashboard()
         self.draw_route_maps()  # 触发绘制路线图
 
-    # ================= 模块三：报表对比 =================
+    # ================= module_three：报表对比 =================
     def init_dashboard_tab(self):
         """
         初始化报表对比标签页
@@ -312,7 +308,7 @@ class SystemMainWindow(tk.Tk):
         self.canvas_frame = ttk.Frame(self.dash_frame)
         self.canvas_frame.pack(fill=tk.BOTH, expand=True)
 
-        self.btn_sim = ttk.Button(self.dash_frame, text="启动改进组最佳路径动态仿真", state=tk.DISABLED,
+        self.btn_sim = ttk.Button(self.dash_frame, text="启动IGA最佳路径动态仿真", state=tk.DISABLED,
                                   command=self.launch_sim)
         self.btn_sim.pack(pady=10)
 
@@ -399,12 +395,10 @@ class SystemMainWindow(tk.Tk):
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
     def launch_sim(self):
-        # 1. 提取节点和解决方案（这两个已经验证没问题了）
+        # 1. 提取节点和解决方案
         nodes_data = self.controller.nodes
         solution_data = self.controller.best_solution
 
-        # 2. 【核心修复】：自动嗅探网格地图的真实变量名，绝不盲猜报错！
-        import numpy as np
         if hasattr(self.controller, 'grid_map'):
             grid_map_data = self.controller.grid_map
         elif hasattr(self.controller, 'grid'):
@@ -414,11 +408,9 @@ class SystemMainWindow(tk.Tk):
         elif hasattr(self.controller, 'obstacle_map'):
             grid_map_data = self.controller.obstacle_map
         elif hasattr(self.controller, 'matrix'):
-            # 有些写法是直接把最短代价矩阵 matrix 传给渲染器
             grid_map_data = self.controller.matrix
         else:
-            # 【终极兜底】：如果上面全都没猜中，打印出你真实的变量名供我们排查，
-            # 并临时生成一个 101x101 的空地图，确保程序绝对不崩溃、窗口绝对能打开！
+            # 临时生成一个 101x101 的空地图，确保程序不崩溃
             print("==================================================")
             print("找不到地图变量！请看这里，你的 Controller 实际拥有的变量是：")
             print(list(self.controller.__dict__.keys()))
@@ -433,7 +425,7 @@ class SystemMainWindow(tk.Tk):
         )
         sim_process.start()
 
-    # ================= 新增模块四：线路对比图谱 =================
+    # ================= module_four：线路对比图谱 =================
     def init_map_tab(self):
         """
         初始化线路对比图谱标签页

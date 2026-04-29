@@ -4,7 +4,6 @@
 @Author: Met
 @Date: 2026-03-12
 """
-import os
 import csv
 import threading
 from config import *
@@ -48,33 +47,6 @@ class SystemController:
             data.append((n.node_id + 1, type_str, n.x, n.y, n.garbage_volume))
         return data
 
-    # def update_nodes_from_ui(self, ui_data_list):
-    #     self.nodes = []
-    #     # 无论UI如何增删，底层严格按照顺序 0 到 N-1 重新洗牌索引
-    #     for item in ui_data_list:
-    #         # item[0] 是显示ID（UI显示的ID），需要转换为底层索引
-    #         display_id = int(item[0])
-    #         actual_node_id = display_id - 1  # 显示ID是 node_id + 1
-    #
-    #         is_depot = (item[1] == "垃圾处理车场")
-    #         # 强制车场的垃圾需求为 0，防止算法引擎容量计算错乱
-    #         garbage_volume = int(item[4]) if not is_depot else 0
-    #
-    #         # 使用 actual_node_id 而不是 enumerate 的 idx
-    #         new_node = Node(node_id=actual_node_id, x=int(item[2]), y=int(item[3]), garbage_volume=garbage_volume, is_depot=is_depot)
-    #         self.nodes.append(new_node)
-    #         if is_depot:
-    #             self.depot_id = actual_node_id
-    #
-    #     # 按 node_id 排序，确保 nodes 列表的顺序与 node_id 一致
-    #     self.nodes.sort(key=lambda n: n.node_id)
-    #     # 重新验证 depot_id
-    #     for n in self.nodes:
-    #         if n.is_depot:
-    #             self.depot_id = n.node_id
-    #             break
-    #
-    #     self.recalculate_matrix()
     def update_nodes_from_ui(self, ui_data_list):
         """
         接收UI层传递的新数据列表，重建系统节点并重算矩阵。
