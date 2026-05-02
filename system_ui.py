@@ -10,9 +10,9 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from gui.renderer import SimulationApp
 
 def start_pygame_renderer(nodes_data, grid_map_data, solution_data):
-    from gui.renderer import SimulationApp
     sim = SimulationApp(nodes_data, grid_map_data, solution_data)
     sim.run()
 
@@ -34,8 +34,7 @@ class SystemMainWindow(tk.Tk):
         self.init_data_tab()
         self.init_optimize_tab()
         self.init_dashboard_tab()
-        self.init_map_tab()  # 新增：线路对比图谱模块
-
+        self.init_map_tab()
         self.controller.load_system_data()
         self.refresh_data_table()
 
@@ -163,52 +162,6 @@ class SystemMainWindow(tk.Tk):
         self.refresh_data_table()
         messagebox.showinfo("成功", "更改已成功应用！")
 
-    def __open_node_dialog(self, title, init_data=None, item_id=None):
-        """
-        打开节点编辑对话框
-        :param title: 对话框标题
-        :param init_data: 初始数据，默认为None
-        :param item_id: 节点ID，默认为None
-        """
-        top = tk.Toplevel(self)
-        top.title(title)
-        top.geometry("300x250")
-
-        ttk.Label(top, text="节点类型:").grid(row=0, column=0, pady=10, padx=10)
-        type_var = tk.StringVar(value=init_data[1] if init_data else "垃圾收运点")
-        ttk.Combobox(top, textvariable=type_var, values=["垃圾处理车场", "垃圾收运点"]).grid(row=0, column=1)
-
-        ttk.Label(top, text="X坐标:").grid(row=1, column=0, pady=10)
-        x_entry = ttk.Entry(top)
-        x_entry.insert(0, str(init_data[2]) if init_data else "0")
-        x_entry.grid(row=1, column=1)
-
-        ttk.Label(top, text="Y坐标:").grid(row=2, column=0, pady=10)
-        y_entry = ttk.Entry(top)
-        y_entry.insert(0, str(init_data[3]) if init_data else "0")
-        y_entry.grid(row=2, column=1)
-
-        ttk.Label(top, text="垃圾量(kg):").grid(row=3, column=0, pady=10)
-        garbage_volume_entry = ttk.Entry(top)
-        garbage_volume_entry.insert(0, str(init_data[4]) if init_data else "10")
-        garbage_volume_entry.grid(row=3, column=1)
-
-        def save():
-            try:
-                x, y, d = int(x_entry.get()), int(y_entry.get()), int(garbage_volume_entry.get())
-                values = (item_id, type_var.get(), x, y, d)
-                if item_id:
-                    self.tree.item(item_id, values=values)
-                else:
-                    self.tree.insert("", tk.END, values=values)
-                top.destroy()
-            except ValueError:
-                messagebox.showerror("错误", "坐标和垃圾量必须是整数！")
-
-        ttk.Button(top, text="保存", command=save).grid(row=4, column=0, columnspan=2, pady=20)
-
-
-
     def import_csv(self):
         """
         导入CSV数据
@@ -314,8 +267,7 @@ class SystemMainWindow(tk.Tk):
 
     def draw_dashboard(self):
         """
-        绘制仪表盘图表
-        绘制算法性能对比和车辆负载率图表
+        主流程：更新仪表盘图表与UI
         """
         # 清除画布上的所有组件
         for widget in self.canvas_frame.winfo_children():
@@ -326,6 +278,23 @@ class SystemMainWindow(tk.Tk):
         # 如果没有数据，直接返回
         if not m: return
 
+        # 1. 更新文本标签与按钮状态
+        self._update_dashboard_text(m)
+
+        # 2. 获取绘制好的图表 Figure 对象
+        fig = self._generate_dashboard_figure(m)
+
+        # 3. 创建Matplotlib画布并绑定到Tkinter窗口
+        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+        # 绘制图表
+        canvas.draw()
+        # 将画布添加到窗口中
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+    def _update_dashboard_text(self, m):
+        """
+        子模块 1：负责更新UI文本与按钮状态
+        """
         # 计算优化提升率
         imp = ((m['total_cost_pure'] - m['total_cost_improved']) / m['total_cost_pure']) * 100
         # 构建评估结果文本
@@ -337,6 +306,10 @@ class SystemMainWindow(tk.Tk):
         # 启用仿真按钮
         self.btn_sim.config(state=tk.NORMAL)
 
+    def _generate_dashboard_figure(self, m):
+        """
+        专职负责通过 matplotlib 生成并导出评估图表
+        """
         # 创建1行2列的图表布局
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 
@@ -378,23 +351,22 @@ class SystemMainWindow(tk.Tk):
 
         # 调整图表布局
         plt.tight_layout()
-        #保存仪表盘图表
+        # 保存仪表盘图表
         os.makedirs("data/output", exist_ok=True)
         try:
-            #优先保存为高清的SVG矢量图，同时保存一份300PI的PNG备选图
-            fig.savefig("data/output/evolution.svg",format="svg",bbox_inches='tight')
-            fig.savefig("data/output/evolution.png",format="png",dpi=300,bbox_inches='tight')
+            # 优先保存为高清的SVG矢量图，同时保存一份300PI的PNG备选图
+            fig.savefig("data/output/evolution.svg", format="svg", bbox_inches='tight')
+            fig.savefig("data/output/evolution.png", format="png", dpi=300, bbox_inches='tight')
             print("✅ 效率评估图表已成功保存到 data/output/ 目录！")
         except Exception as e:
             print(f"❌ 保存图表失败: {e}")
-        # 创建Matplotlib画布并绑定到Tkinter窗口
-        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
-        # 绘制图表
-        canvas.draw()
-        # 将画布添加到窗口中
-        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        return fig
 
     def launch_sim(self):
+        """
+
+        :return:
+        """
         # 1. 提取节点和解决方案
         nodes_data = self.controller.nodes
         solution_data = self.controller.best_solution

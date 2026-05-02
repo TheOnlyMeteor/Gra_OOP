@@ -11,9 +11,6 @@ matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'Arial']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
 if __name__ == "__main__":
-    # 1. 实例化核心控制器
-    controller = SystemController()
-
     # 2. 实例化并启动图形系统界面
-    app = SystemMainWindow(controller)
+    app = SystemMainWindow(SystemController())
     app.mainloop()

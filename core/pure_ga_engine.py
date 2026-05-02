@@ -13,8 +13,9 @@ import random
 
 from .base_solver import BaseGASolver
 from .models import Solution
-from .pure_ga_logic import GreedySplitter
-
+from typing import List, Tuple
+import numpy as np
+from .models import Route
 
 class PureGASolver(BaseGASolver):
     """纯遗传算法求解器（对照组）"""
@@ -57,7 +58,7 @@ class PureGASolver(BaseGASolver):
             sol: 要评估的解决方案
         """
         # 仅使用贪心分割
-        cost, routes = GreedySplitter.split(
+        cost, routes = self.split(
             sol.chromosome, self.matrix, self.garbage_volume,
             self.cfg.CAPACITY, self.depot_id
         )
@@ -133,3 +134,43 @@ class PureGASolver(BaseGASolver):
             i, j = random.sample(range(len(chromo)), 2)
             chromo[i], chromo[j] = chromo[j], chromo[i]
         return chromo
+
+    @staticmethod
+    def split(tour: List[int], matrix: np.ndarray, garbage_volume: List[int],
+              capacity: int, depot_id: int) -> Tuple[float, List[Route]]:
+        """
+        贪心分割算法
+        最基础的贪心分割：只要装不下了，就回库换一辆车
+        :param tour: 客户访问序列
+        :param matrix: 距离矩阵
+        :param garbage_volume: 需求列表
+        :param capacity: 车辆容量
+        :param depot_id: 仓库ID
+        :return: Tuple[float, List[Route]]: 总成本和路径列表
+        """
+        routes = []
+        current_route_nodes = []
+        current_load = 0
+        total_cost = 0.0
+
+        for node in tour:
+            node_demand = garbage_volume[node]
+            # 如果加上这个点就超载了，则当前车结束，结算并换新车
+            if current_load + node_demand > capacity:
+                if current_route_nodes:
+                    route = Route(current_route_nodes, matrix, depot_id)
+                    routes.append(route)
+                    total_cost += route.cost
+                current_route_nodes = [node]
+                current_load = node_demand
+            else:
+                current_route_nodes.append(node)
+                current_load += node_demand
+
+        # 处理最后一条路径
+        if current_route_nodes:
+            route = Route(current_route_nodes, matrix, depot_id)
+            routes.append(route)
+            total_cost += route.cost
+
+        return total_cost, routes

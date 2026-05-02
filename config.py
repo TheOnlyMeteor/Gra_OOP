@@ -12,8 +12,8 @@ DATA_INPUT_DIR = os.path.join(BASE_DIR, "data", "input")
 DATA_OUTPUT_DIR = os.path.join(BASE_DIR, "data", "output")
 
 # 文件名
-VRP_FILE = "X-n125-k30.vrp" #VRP数据文件
-MAP_FILE = "obstacles.txt" #地图文件
+VRP_FILE = "A-n80-k10.vrp" #VRP数据文件
+MAP_FILE = "obstacles_dev.txt" #地图文件
 
 # 算法参数
 POP_SIZE = 80 #种群大小

@@ -12,9 +12,9 @@
 @Date: 2026-03-12
 """
 import random
+import numpy as np
 from typing import List, Dict, Tuple
 from .models import Solution, Route
-from .split_logic import PrinsSplitter
 from .base_solver import BaseGASolver
 
 
@@ -79,7 +79,7 @@ class GASolver(BaseGASolver):
             return
 
         # 1. Split
-        cost, routes = PrinsSplitter.split(sol.chromosome, self.matrix, self.demands,
+        cost, routes = self.split(sol.chromosome, self.matrix, self.demands,
                                            self.cfg.CAPACITY, self.depot_id)
 
         # 2. Local Search (Intra-route)
@@ -204,3 +204,54 @@ class GASolver(BaseGASolver):
                 i, j = random.sample(range(len(chromo)), 2)
                 chromo[i], chromo[j] = chromo[j], chromo[i]
         return chromo
+
+    @staticmethod
+    def split(tour: List[int], matrix: np.ndarray, garbage_volume: List[int],
+              capacity: int, depot_id: int) -> Tuple[float, List[Route]]:
+        """
+        Prins分割算法
+        使用动态规划方法将染色体（巨型巡游序列）分割成多条满足容量约束的最优路径
+        :param tour: 客户访问序列
+        :param matrix: 距离矩阵
+        :param garbage_volume: 需求列表
+        :param capacity: 车辆容量
+        :param depot_id: 仓库ID
+        :return: Tuple[float, List[Route]]: 总成本和路径列表
+        """
+        n = len(tour)
+        if n == 0: return 0.0, []
+
+        f = [float('inf')] * (n + 1)
+        f[0] = 0.0
+        predecessor = [0] * (n + 1)
+
+        # 预缓存减少访问开销
+        dist_to_depot = [matrix[depot_id][node] for node in tour]
+        dist_from_depot = [matrix[node][depot_id] for node in tour]
+
+        for i in range(1, n + 1):
+            load = 0
+            route_dist = 0.0
+            for j in range(i, 0, -1):
+                curr_node = tour[j - 1]
+                load += garbage_volume[curr_node]
+                if load > capacity: break
+
+                if j < i:
+                    route_dist += matrix[curr_node][tour[j]]
+
+                cost = f[j - 1] + dist_to_depot[j - 1] + route_dist + dist_from_depot[i - 1]
+
+                if cost < f[i] - 1e-9:
+                    f[i] = cost
+                    predecessor[i] = j - 1
+
+        # 回溯构建
+        routes = []
+        curr = n
+        while curr > 0:
+            prev = predecessor[curr]
+            nodes = tour[prev:curr]
+            routes.append(Route(nodes, matrix, depot_id))
+            curr = prev
+        return f[n], routes[::-1]

@@ -111,6 +111,8 @@ class SystemController:
             pure_solver.generate_initial_population()
             for gen in range(1, generations + 1):
                 pure_solver.evolve(gen)
+                if gen == 1:
+                    print(f"PGA={pure_solver.best_solution.total_cost}")
                 progress_callback(int((gen / (generations * 2)) * 100), pure_solver.best_solution.total_cost,
                                   "基础遗传算法评估中...")
 
@@ -118,6 +120,8 @@ class SystemController:
             improved_solver.generate_initial_population()
             for gen in range(1, generations + 1):
                 improved_solver.evolve(gen)
+                if gen == 1:
+                    print(f"IGA={improved_solver.best_solution.total_cost}")
                 progress_callback(50 + int((gen / (generations * 2)) * 100), improved_solver.best_solution.total_cost,
                                   "改进启发式引擎优化中...")
 
@@ -128,13 +132,29 @@ class SystemController:
             DataLoader.export_solution_to_file(self.best_solution,"data/output/Final_Best_Routes.txt")
             self.is_running = False
             finish_callback()
-
         threading.Thread(target=_task, daemon=True).start()
 
 
     def get_evaluation_metrics(self):
-        if not self.best_solution: return None
-        load_rates = [(f"V{i + 1}", (r.load / self.capacity) * 100) for i, r in enumerate(self.best_solution.routes)]
+        """
+        获取评估指标信息进行展示
+        :return: 评估信息
+        """
+        if not self.best_solution or not self.pure_solution: return None
+
+        # 新增一个辅助计算函数：遍历路线中的节点，去源数据里累加真实垃圾量
+        def calculate_load_rate(route):
+            # 根据路线中的节点ID，从 self.nodes 中查出真实的垃圾量并累加
+            actual_load = sum(self.nodes[nid].garbage_volume for nid in route.nodes)
+            return (actual_load / self.capacity) * 100
+        # 计算实验组（改进GA）的满载率
+        load_rates = [(f"V{i + 1}", (r.load / self.capacity) * 100) for i, r in
+                               enumerate(self.best_solution.routes)]
+
+        # 计算对照组（基础GA）的满载率
+        load_rates_pure = [(f"V{i + 1}", calculate_load_rate(r)) for i, r in enumerate(self.pure_solution.routes)]
+        print(f"PGA车辆满载率:{load_rates_pure}")
+        print(f"IGA车辆满载率:{load_rates}")
         return {
             "total_cost_improved": self.best_solution.total_cost,
             "total_cost_pure": self.pure_solution.total_cost,
@@ -143,29 +163,3 @@ class SystemController:
             "history_improved": self.improved_history,
             "history_pure": self.pure_history
         }
-
-    def get_routes_data_for_sim(self):
-        """
-        提取用于独立进程仿真的纯数据。
-        自动检测 Route 类中用于存储节点序列的变量名。
-        """
-        if not getattr(self, 'best_solution', None) or not self.best_solution.routes:
-            return []
-
-        routes_data = []
-        for route in self.best_solution.routes:
-            # 自动适配你在 models.py 中给路线定义的实际属性名
-            if hasattr(route, 'nodes'):
-                routes_data.append(route.nodes)
-            elif hasattr(route, 'route'):
-                routes_data.append(route.route)
-            elif hasattr(route, 'node_list'):
-                routes_data.append(route.node_list)
-            elif hasattr(route, 'path'):
-                routes_data.append(route.path)
-            else:
-                # 如果都不是，直接打印出 Route 类所有的变量名，方便咱们排查
-                print("请检查 models.py 中 Route 类的变量名！当前 Route 的属性有：", route.__dict__.keys())
-                break
-
-        return routes_data
