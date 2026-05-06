@@ -4,7 +4,6 @@
 @Author: Met
 @Date: 2026-03-12
 """
-import os
 import numpy as np
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
@@ -530,6 +529,23 @@ class SystemMainWindow(tk.Tk):
                                     foreground=COLORS["mid_text"])
         self.stat_label.pack(padx=18, pady=14)
 
+        self.dashboard_dl_bar = ttk.Frame(frame)
+        self.dashboard_dl_bar.pack(fill=tk.X, padx=20, pady=(8, 0))
+        ttk.Label(self.dashboard_dl_bar, text="下载图表:",
+                  font=("Microsoft YaHei", 10)).pack(side=tk.LEFT, padx=(0, 8))
+        self.btn_dl_dash_svg = ttk.Button(self.dashboard_dl_bar,
+                                          text="保存为 SVG",
+                                          style="Edit.TButton",
+                                          state=tk.DISABLED,
+                                          command=self._download_dashboard_svg)
+        self.btn_dl_dash_svg.pack(side=tk.LEFT, padx=4)
+        self.btn_dl_dash_png = ttk.Button(self.dashboard_dl_bar,
+                                          text="保存为 PNG",
+                                          style="Primary.TButton",
+                                          state=tk.DISABLED,
+                                          command=self._download_dashboard_png)
+        self.btn_dl_dash_png.pack(side=tk.LEFT, padx=4)
+
         self.canvas_frame = ttk.Frame(frame)
         self.canvas_frame.pack(fill=tk.BOTH, expand=True, padx=12)
 
@@ -566,6 +582,8 @@ class SystemMainWindow(tk.Tk):
         )
         self.stat_label.config(text=text, foreground=COLORS["primary"])
         self.btn_sim.config(state=tk.NORMAL)
+        self.btn_dl_dash_svg.config(state=tk.NORMAL)
+        self.btn_dl_dash_png.config(state=tk.NORMAL)
 
     def _generate_dashboard_figure(self, m):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
@@ -597,15 +615,7 @@ class SystemMainWindow(tk.Tk):
                      f'{yval:.1f}%', ha='center', va='bottom', fontsize=8)
 
         plt.tight_layout()
-        os.makedirs("data/output", exist_ok=True)
-        try:
-            fig.savefig("data/output/evolution.svg",
-                        format="svg", bbox_inches='tight')
-            fig.savefig("data/output/evolution.png",
-                        format="png", dpi=300, bbox_inches='tight')
-            print("效率评估图表已保存到 data/output/ 目录！")
-        except Exception as e:
-            print(f"保存图表失败: {e}")
+        self.dashboard_fig = fig
         return fig
 
     def launch_sim(self):
@@ -636,6 +646,29 @@ class SystemMainWindow(tk.Tk):
         )
         sim_process.start()
 
+    def _download_dashboard_svg(self):
+        if not hasattr(self, 'dashboard_fig') or self.dashboard_fig is None:
+            return
+        path = filedialog.asksaveasfilename(
+            defaultextension=".svg",
+            filetypes=[("SVG 矢量图", "*.svg")],
+            initialfile="evolution.svg")
+        if path:
+            self.dashboard_fig.savefig(path, format="svg", bbox_inches='tight')
+            messagebox.showinfo("成功", f"图表已保存到:\n{path}")
+
+    def _download_dashboard_png(self):
+        if not hasattr(self, 'dashboard_fig') or self.dashboard_fig is None:
+            return
+        path = filedialog.asksaveasfilename(
+            defaultextension=".png",
+            filetypes=[("PNG 图片", "*.png")],
+            initialfile="evolution.png")
+        if path:
+            self.dashboard_fig.savefig(path, format="png", dpi=300,
+                                       bbox_inches='tight')
+            messagebox.showinfo("成功", f"图表已保存到:\n{path}")
+
     # ================= 标签页四：线路对比图谱 =================
     def init_map_tab(self):
         frame = self.tab_frames["map"]
@@ -652,9 +685,26 @@ class SystemMainWindow(tk.Tk):
                                         foreground=COLORS["mid_text"])
         self.map_info_label.pack(pady=8)
 
+        self.map_dl_bar = ttk.Frame(frame)
+        self.map_dl_bar.pack(fill=tk.X, padx=20, pady=(0, 8))
+
         self.map_canvas_frame = ttk.Frame(frame)
         self.map_canvas_frame.pack(fill=tk.BOTH, expand=True,
                                    padx=12, pady=(0, 8))
+        ttk.Label(self.map_dl_bar, text="下载图表:",
+                  font=("Microsoft YaHei", 10)).pack(side=tk.LEFT, padx=(0, 8))
+        self.btn_dl_map_svg = ttk.Button(self.map_dl_bar,
+                                         text="保存为 SVG",
+                                         style="Edit.TButton",
+                                         state=tk.DISABLED,
+                                         command=self._download_map_svg)
+        self.btn_dl_map_svg.pack(side=tk.LEFT, padx=4)
+        self.btn_dl_map_png = ttk.Button(self.map_dl_bar,
+                                         text="保存为 PNG",
+                                         style="Primary.TButton",
+                                         state=tk.DISABLED,
+                                         command=self._download_map_png)
+        self.btn_dl_map_png.pack(side=tk.LEFT, padx=4)
 
     def draw_route_maps(self):
         for widget in self.map_canvas_frame.winfo_children():
@@ -687,19 +737,37 @@ class SystemMainWindow(tk.Tk):
         )
 
         plt.tight_layout()
-        os.makedirs("data/output", exist_ok=True)
-        try:
-            fig.savefig("data/output/route_map.svg",
-                        format="svg", bbox_inches='tight')
-            fig.savefig("data/output/route_map.png",
-                        format="png", dpi=300, bbox_inches='tight')
-            print("线路对比图谱已保存到 data/output/ 目录！")
-        except Exception as e:
-            print(f"保存线路图谱失败: {e}")
+        self.route_map_fig = fig
 
         canvas = FigureCanvasTkAgg(fig, master=self.map_canvas_frame)
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+        self.btn_dl_map_svg.config(state=tk.NORMAL)
+        self.btn_dl_map_png.config(state=tk.NORMAL)
+
+    def _download_map_svg(self):
+        if not hasattr(self, 'route_map_fig') or self.route_map_fig is None:
+            return
+        path = filedialog.asksaveasfilename(
+            defaultextension=".svg",
+            filetypes=[("SVG 矢量图", "*.svg")],
+            initialfile="route_map.svg")
+        if path:
+            self.route_map_fig.savefig(path, format="svg", bbox_inches='tight')
+            messagebox.showinfo("成功", f"图谱已保存到:\n{path}")
+
+    def _download_map_png(self):
+        if not hasattr(self, 'route_map_fig') or self.route_map_fig is None:
+            return
+        path = filedialog.asksaveasfilename(
+            defaultextension=".png",
+            filetypes=[("PNG 图片", "*.png")],
+            initialfile="route_map.png")
+        if path:
+            self.route_map_fig.savefig(path, format="png", dpi=300,
+                                       bbox_inches='tight')
+            messagebox.showinfo("成功", f"图谱已保存到:\n{path}")
 
     def __plot_single_route(self, ax, nodes, solution, title):
         coords = {n.node_id: (n.x, n.y) for n in nodes}

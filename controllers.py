@@ -10,8 +10,8 @@ from config import *
 from core.models import Node
 from utils.data_loader import DataLoader
 from utils.path_finding import PathFinder
-from core.ga_engine import GASolver
-from core.pure_ga_engine import PureGASolver
+from core.ga_engine import IGACore
+from core.pure_ga_engine import CGACore
 
 class SystemController:
     def __init__(self):
@@ -107,7 +107,7 @@ class SystemController:
             cfg.GENERATIONS = generations
             cfg.CAPACITY = self.capacity
 
-            pure_solver = PureGASolver(self.matrix, garbage_volumes, self.capacity, customers, self.depot_id, cfg)
+            pure_solver = CGACore(self.matrix, garbage_volumes, self.capacity, customers, self.depot_id, cfg)
             pure_solver.generate_initial_population()
             for gen in range(1, generations + 1):
                 pure_solver.evolve(gen)
@@ -116,7 +116,7 @@ class SystemController:
                 progress_callback(int((gen / (generations * 2)) * 100), pure_solver.best_solution.total_cost,
                                   "基础遗传算法评估中...")
 
-            improved_solver = GASolver(self.matrix, garbage_volumes, self.capacity, customers, self.depot_id, cfg)
+            improved_solver = IGACore(self.matrix, garbage_volumes, self.capacity, customers, self.depot_id, cfg)
             improved_solver.generate_initial_population()
             for gen in range(1, generations + 1):
                 improved_solver.evolve(gen)

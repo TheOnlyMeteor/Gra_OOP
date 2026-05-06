@@ -1,6 +1,6 @@
 """
 基础求解器类
-该文件定义了遗传算法求解器的抽象基类BaseGASolver，提供了求解器的基本结构和方法。
+该文件定义了遗传算法求解器的抽象基类BaseGACore，提供了求解器的基本结构和方法。
 @Author: Met
 @Date: 2026-03-12
 """
@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod
 from typing import List
 from .models import Solution
 
-class BaseGASolver(ABC):
+class BaseGACore(ABC):
     """遗传算法求解器的抽象基类"""
 
     def __init__(self, cfg):

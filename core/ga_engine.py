@@ -1,7 +1,7 @@
 """
 改进版遗传算法求解器
 
-该文件实现了改进版的遗传算法求解器GASolver，继承自BaseGASolver。
+该文件实现了改进版的遗传算法核心IGACore，继承自BaseGACore。
 主要功能包括：
 1. 混合初始化种群（NN启发式 + 随机）
 2. 评估解（包含分割、局部搜索优化）
@@ -15,10 +15,10 @@ import random
 import numpy as np
 from typing import List, Dict, Tuple
 from .models import Solution, Route
-from .base_solver import BaseGASolver
+from .base_core import BaseGACore
 
 
-class GASolver(BaseGASolver):
+class IGACore(BaseGACore):
     """改进版遗传算法求解器"""
     def __init__(self, matrix, demands, capacity, customers, depot_id, cfg):
         """

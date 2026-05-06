@@ -1,7 +1,7 @@
 """
 纯遗传算法求解器（对照组）
 
-该文件实现了纯遗传算法求解器PureGASolver，作为改进版遗传算法的对照组。
+该文件实现了纯遗传算法求解器CGACore，作为改进版遗传算法的对照组。
 主要功能包括：
 1. 随机初始化种群（不使用启发式算法）
 2. 评估解（仅进行贪心分割，不进行局部优化）
@@ -11,13 +11,13 @@
 """
 import random
 
-from .base_solver import BaseGASolver
+from .base_core import BaseGACore
 from .models import Solution
 from typing import List, Tuple
 import numpy as np
 from .models import Route
 
-class PureGASolver(BaseGASolver):
+class CGACore(BaseGACore):
     """纯遗传算法求解器（对照组）"""
 
     def __init__(self, matrix, garbage_volume, capacity, customers, depot_id, cfg):
